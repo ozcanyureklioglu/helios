@@ -1,12 +1,12 @@
-version: '3.8'
+﻿version: '3.8'
 services:
   db:
     image: pgvector/pgvector:pg16
-    container_name: helios_postgres
+    container_name: vectomera_postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "admin123."
-      POSTGRES_DB: heliosdb
+      POSTGRES_DB: vectomeradb
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - "5432:5432"
@@ -16,7 +16,7 @@ services:
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
-    container_name: helios_rabbitmq
+    container_name: vectomera_rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -27,3 +27,4 @@ services:
 
 volumes:
   postgres_data:
+

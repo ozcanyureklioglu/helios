@@ -1,4 +1,4 @@
-# ☀️ Helios — AI-Powered Inventory & Product Intelligence Platform
+﻿# â˜€ï¸ Vectomera â€” AI-Powered Inventory & Product Intelligence Platform
 
 <p align="center">
   <img src="https://img.shields.io/badge/.NET-9.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" />
@@ -8,34 +8,34 @@
   <img src="https://img.shields.io/badge/Semantic%20Kernel-AI-742774?style=for-the-badge" />
 </p>
 
-**Helios** is an AI-powered e-commerce and inventory management platform that unifies product catalogs, warehouse inventory management, and product reviews. Powered by a robust **RAG (Retrieval-Augmented Generation)** infrastructure, it enables **semantic search** and **intelligent data analysis** across all domain entities.
+**Vectomera** is an AI-powered e-commerce and inventory management platform that unifies product catalogs, warehouse inventory management, and product reviews. Powered by a robust **RAG (Retrieval-Augmented Generation)** infrastructure, it enables **semantic search** and **intelligent data analysis** across all domain entities.
 
 ---
 
-## 🏗️ Architecture Overview
+## ğŸ—ï¸ Architecture Overview
 
 The project is built upon **Clean Architecture** principles and orchestrated using **.NET Aspire**.
 
 ```
-Helios.sln
-├── Helios.AppHost          → .NET Aspire Orchestrator (Api + Worker)
-├── Helios.Api              → REST API (Minimal API Endpoints)
-├── Helios.Application      → Business rules, Interfaces, DTOs, Validations
-├── Helios.Domain           → Entity models, BaseEntity
-├── Helios.Infrastructure   → EF Core, Services, Ollama/SK Integrations
-├── Helios.Worker           → Background consumers (MassTransit)
-├── Helios.ServiceDefaults  → Shared Aspire configurations
-└── docker-compose.yml      → PostgreSQL (pgvector) + RabbitMQ
+Vectomera.sln
+â”œâ”€â”€ Vectomera.AppHost          â†’ .NET Aspire Orchestrator (Api + Worker)
+â”œâ”€â”€ Vectomera.Api              â†’ REST API (Minimal API Endpoints)
+â”œâ”€â”€ Vectomera.Application      â†’ Business rules, Interfaces, DTOs, Validations
+â”œâ”€â”€ Vectomera.Domain           â†’ Entity models, BaseEntity
+â”œâ”€â”€ Vectomera.Infrastructure   â†’ EF Core, Services, Ollama/SK Integrations
+â”œâ”€â”€ Vectomera.Worker           â†’ Background consumers (MassTransit)
+â”œâ”€â”€ Vectomera.ServiceDefaults  â†’ Shared Aspire configurations
+â””â”€â”€ docker-compose.yml      â†’ PostgreSQL (pgvector) + RabbitMQ
 ```
 
 ### Layer Dependency Flow
 
 ```mermaid
 graph TD
-    API["Helios.Api<br/><i>Minimal API Endpoints</i>"] --> APP["Helios.Application<br/><i>Interfaces, DTOs, Validators</i>"]
-    WORKER["Helios.Worker<br/><i>MassTransit Consumers</i>"] --> APP
-    APP --> DOMAIN["Helios.Domain<br/><i>Entities</i>"]
-    INFRA["Helios.Infrastructure<br/><i>EF Core, Services, AI</i>"] --> APP
+    API["Vectomera.Api<br/><i>Minimal API Endpoints</i>"] --> APP["Vectomera.Application<br/><i>Interfaces, DTOs, Validators</i>"]
+    WORKER["Vectomera.Worker<br/><i>MassTransit Consumers</i>"] --> APP
+    APP --> DOMAIN["Vectomera.Domain<br/><i>Entities</i>"]
+    INFRA["Vectomera.Infrastructure<br/><i>EF Core, Services, AI</i>"] --> APP
     INFRA --> DOMAIN
     API --> INFRA
     WORKER --> INFRA
@@ -43,14 +43,14 @@ graph TD
 
 ---
 
-## 🤖 RAG (Retrieval-Augmented Generation) Pipeline
+## ğŸ¤– RAG (Retrieval-Augmented Generation) Pipeline
 
-The core of Helios' AI capabilities lies within its **RAG** architecture. This flow semantically matches user queries with the most relevant database records, passing them to the LLM as context to generate highly accurate, context-aware, and hallucination-free responses.
+The core of Vectomera' AI capabilities lies within its **RAG** architecture. This flow semantically matches user queries with the most relevant database records, passing them to the LLM as context to generate highly accurate, context-aware, and hallucination-free responses.
 
 ```mermaid
 sequenceDiagram
-    participant User as 👤 User
-    participant API as Helios.Api
+    participant User as ğŸ‘¤ User
+    participant API as Vectomera.Api
     participant AI as AiService
     participant EMB as EmbeddingService
     participant PG as PostgreSQL + pgvector
@@ -59,15 +59,15 @@ sequenceDiagram
     User->>API: POST /ai/advice { query }
     API->>AI: GetAdviceAsync(query)
     
-    Note over AI,EMB: 1️⃣ Embedding
-    AI->>EMB: Query → Vector (nomic-embed-text)
+    Note over AI,EMB: 1ï¸âƒ£ Embedding
+    AI->>EMB: Query â†’ Vector (nomic-embed-text)
     EMB-->>AI: float[] queryVector
 
-    Note over AI,PG: 2️⃣ Retrieval (Vector Search)
-    AI->>PG: L2Distance search (Top-3 × 3 tables)
+    Note over AI,PG: 2ï¸âƒ£ Retrieval (Vector Search)
+    AI->>PG: L2Distance search (Top-3 Ã— 3 tables)
     PG-->>AI: Most relevant chunk texts
 
-    Note over AI,LLM: 3️⃣ Generation
+    Note over AI,LLM: 3ï¸âƒ£ Generation
     AI->>LLM: System Prompt + Context + Query
     LLM-->>AI: Synthesized Response
     
@@ -87,13 +87,13 @@ The query vector is searched across the following **3 distinct VectorChunk** tab
 
 ---
 
-## ⚙️ Embedding & Chunking Flow
+## âš™ï¸ Embedding & Chunking Flow
 
 Whenever new data is created (product, inventory, or review), **embedding** and **chunking** processes are automatically triggered in the background.
 
 ```mermaid
 flowchart LR
-    subgraph API ["Helios.Api"]
+    subgraph API ["Vectomera.Api"]
         A1[POST /products] --> P1[ProductService]
         A2[POST /warehouse-inventories] --> P2[WarehouseInventoryService]
         A3[POST /product-reviews] --> P3[ProductReviewService]
@@ -105,7 +105,7 @@ flowchart LR
         Q3([CreateProductReviewEvent])
     end
 
-    subgraph Worker ["Helios.Worker"]
+    subgraph Worker ["Vectomera.Worker"]
         C1[ProductEmbeddingConsumer]
         C2[WarehouseInventoryEmbeddingConsumer]
         C3[ProductReviewEmbeddingConsumer]
@@ -150,7 +150,7 @@ flowchart LR
 
 ---
 
-## 🗄️ Domain Model
+## ğŸ—„ï¸ Domain Model
 
 ```mermaid
 erDiagram
@@ -218,7 +218,7 @@ erDiagram
 
 ---
 
-## 🛣️ API Endpoints
+## ğŸ›£ï¸ API Endpoints
 
 ### Product Management (`/products`)
 | Method | Endpoint | Description |
@@ -243,11 +243,11 @@ erDiagram
 |---|---|---|
 | `POST` | `/ai/advice` | RAG-based semantic Q&A. Scans all VectorChunk tables |
 
-> 📌 All endpoints are accessible and testable via the **Swagger UI**.
+> ğŸ“Œ All endpoints are accessible and testable via the **Swagger UI**.
 
 ---
 
-## 🧰 Tech Stack
+## ğŸ§° Tech Stack
 
 | Technology | Purpose |
 |---|---|
@@ -266,7 +266,7 @@ erDiagram
 
 ---
 
-## 🚀 Getting Started
+## ğŸš€ Getting Started
 
 ### Prerequisites
 
@@ -284,7 +284,7 @@ This command will start the following services:
 
 | Service | Port | Description |
 |---|---|---|
-| PostgreSQL (pgvector) | `5432` | Database (`heliosdb`) |
+| PostgreSQL (pgvector) | `5432` | Database (`vectomeradb`) |
 | RabbitMQ | `5672` / `15672` | Message queue / Management UI |
 
 ### 2. Download Ollama Models
@@ -303,11 +303,11 @@ ollama pull gemma3:4b
 
 ```bash
 # Using .NET Aspire (Starts Api + Worker together)
-dotnet run --project Helios.AppHost
+dotnet run --project Vectomera.AppHost
 
 # Or run them separately
-dotnet run --project Helios.Api
-dotnet run --project Helios.Worker
+dotnet run --project Vectomera.Api
+dotnet run --project Vectomera.Worker
 ```
 
 ### 4. Swagger UI
@@ -320,7 +320,7 @@ http://localhost:<port>/swagger
 
 ---
 
-## 📁 Configuration
+## ğŸ“ Configuration
 
 You can customize the following settings in the `appsettings.json` file:
 
@@ -336,6 +336,7 @@ You can customize the following settings in the `appsettings.json` file:
 
 ---
 
-## 📄 License
+## ğŸ“„ License
 
 This project is for private use.
+

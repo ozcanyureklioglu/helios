@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-Vectomera.Worker-8efb49f8-01e7-4811-97b4-001f40b6889c</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Vectomera.Infrastructure\Vectomera.Infrastructure.csproj" />
+    <ProjectReference Include="..\Vectomera.Application\Vectomera.Application.csproj" />
+    <ProjectReference Include="..\Vectomera.ServiceDefaults\Vectomera.ServiceDefaults.csproj" />
+  </ItemGroup>
+</Project>
+
