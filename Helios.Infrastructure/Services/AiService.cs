@@ -81,7 +81,7 @@ public class AiService : IAiService
             foreach (var chunk in topReviewChunks) contextBuilder.AppendLine(chunk);
 
             var chatHistory = new ChatHistory();
-            chatHistory.AddSystemMessage("Sen Helios e-ticaret/depo sisteminin akıllı bir asistanısın. Lütfen kullanıcının sorusunu sadece aşağıda verilen 'Bağlam (Context)' bilgilerini kullanarak cevapla.");
+            chatHistory.AddSystemMessage("Sen Helios e-ticaret/depo sisteminin akıllı bir asistanısın. Lütfen kullanıcının sorusunu sadece aşağıda verilen 'Bağlam (Context)' bilgilerini kullanarak cevapla.Not kullanıcının sorduğu dile göre cevap ver(İngilizce,Türkçe vb.)");
 
             var prompt = $"Bağlam (Context):\n{contextBuilder}\n\nKullanıcının Sorusu: {request.Query}";
             chatHistory.AddUserMessage(prompt);
