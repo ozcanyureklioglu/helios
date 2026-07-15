@@ -23,6 +23,8 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<BrandVectorChunk> BrandVectorChunks { get; set; }
     public DbSet<ProductVectorChunk> ProductVectorChunks { get; set; }
     public DbSet<WarehouseInventoryVectorChunk> WarehouseInventoryVectorChunks { get; set; }
+    public DbSet<ProductReview> ProductReviews { get; set; }
+    public DbSet<ProductReviewVectorChunk> ProductReviewVectorChunks { get; set; }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

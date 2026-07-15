@@ -11,4 +11,5 @@ public class Warehouse : BaseEntity
     public float Latitude { get; set; }
 
     public ICollection<WarehouseInventory> Inventories { get; set; } = new List<WarehouseInventory>();
+    public ICollection<ProductReview> ProductReviews { get; set; } = new List<ProductReview>();
 }

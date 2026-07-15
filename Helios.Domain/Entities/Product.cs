@@ -19,4 +19,5 @@ public class Product : BaseEntity
     public ICollection<ProductProperty> ProductProperties { get; set; } = new List<ProductProperty>();
     public ICollection<WarehouseInventory> WarehouseInventories { get; set; } = new List<WarehouseInventory>();
     public ICollection<ProductVectorChunk> VectorChunks { get; set; } = new List<ProductVectorChunk>();
+    public ICollection<ProductReview> ProductReviews { get; set; } = new List<ProductReview>();
 }

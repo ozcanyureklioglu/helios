@@ -22,6 +22,10 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddScoped<Helios.Application.Common.Interfaces.IAppDbContext>(provider => provider.GetRequiredService<AppDbContext>());
         services.AddScoped<Helios.Application.Common.Interfaces.ITextEmbeddingService, Helios.Infrastructure.Services.SemanticKernelEmbeddingService>();
         services.AddScoped<Helios.Application.Common.Interfaces.IProductService, Helios.Infrastructure.Services.ProductService>();
+        services.AddScoped<Helios.Application.Common.Interfaces.IWarehouseInventoryService, Helios.Infrastructure.Services.WarehouseInventoryService>();
+        services.AddScoped<Helios.Application.Common.Interfaces.IChunkService, Helios.Infrastructure.Services.ChunkService>();
+        services.AddScoped<Helios.Application.Common.Interfaces.IProductReviewService, Helios.Infrastructure.Services.ProductReviewService>();
+        services.AddScoped<Helios.Application.Common.Interfaces.IAiService, Helios.Infrastructure.Services.AiService>();
 
         return services;
     }

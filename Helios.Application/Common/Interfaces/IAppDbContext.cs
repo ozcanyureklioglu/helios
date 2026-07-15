@@ -16,6 +16,8 @@ public interface IAppDbContext
     DbSet<BrandVectorChunk> BrandVectorChunks { get; }
     DbSet<ProductVectorChunk> ProductVectorChunks { get; }
     DbSet<WarehouseInventoryVectorChunk> WarehouseInventoryVectorChunks { get; }
+    DbSet<ProductReview> ProductReviews { get; }
+    DbSet<ProductReviewVectorChunk> ProductReviewVectorChunks { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
