@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using Vectomera.Application.Common.Events;
 using Vectomera.Application.Common.Interfaces;
 using Vectomera.Application.Common.Models;
@@ -32,7 +32,7 @@ public class ProductReviewService : IProductReviewService
         var responseData = new Vectomera.Application.Features.ProductReviews.Dtos.BulkCreateProductReviewResponse();
 
         if (requests == null || !requests.Any())
-            return ApiResponse<Vectomera.Application.Features.ProductReviews.Dtos.BulkCreateProductReviewResponse>.Fail("Liste boÅŸ olamaz.");
+            return ApiResponse<Vectomera.Application.Features.ProductReviews.Dtos.BulkCreateProductReviewResponse>.Fail("Liste boş olamaz.");
 
         var productIds = requests.Select(r => r.ProductId).Distinct().ToList();
         var warehouseIds = requests.Where(r => r.WarehouseId.HasValue).Select(r => r.WarehouseId!.Value).Distinct().ToList();
@@ -74,7 +74,7 @@ public class ProductReviewService : IProductReviewService
                 {
                     ProductId = request.ProductId,
                     Sku = sku,
-                    ErrorMessage = "ÃœrÃ¼n bulunamadÄ±."
+                    ErrorMessage = "Ürün bulunamadı."
                 });
                 continue;
             }
@@ -85,7 +85,7 @@ public class ProductReviewService : IProductReviewService
                 {
                     ProductId = request.ProductId,
                     Sku = sku,
-                    ErrorMessage = "Depo bulunamadÄ±."
+                    ErrorMessage = "Depo bulunamadı."
                 });
                 continue;
             }
@@ -122,7 +122,31 @@ public class ProductReviewService : IProductReviewService
             await Task.WhenAll(publishTasks);
         }
 
-        return ApiResponse<Vectomera.Application.Features.ProductReviews.Dtos.BulkCreateProductReviewResponse>.Ok(responseData, "Ä°ÅŸlem tamamlandÄ±.");
+        return ApiResponse<Vectomera.Application.Features.ProductReviews.Dtos.BulkCreateProductReviewResponse>.Ok(responseData, "İşlem tamamlandı.");
+    }
+
+    public async Task<ApiResponse<List<Vectomera.Application.Features.ProductReviews.Dtos.ProductReviewDto>>> GetProductReviewsAsync(Guid? productId, CancellationToken cancellationToken = default)
+    {
+        var query = _context.ProductReviews.AsQueryable();
+        
+        if (productId.HasValue)
+        {
+            query = query.Where(r => r.ProductId == productId.Value);
+        }
+
+        var reviews = await query
+            .Select(r => new Vectomera.Application.Features.ProductReviews.Dtos.ProductReviewDto
+            {
+                Id = r.Id,
+                ProductId = r.ProductId,
+                WarehouseId = r.WarehouseId,
+                Title = r.Title,
+                Description = r.Description,
+                Point = r.Point
+            })
+            .ToListAsync(cancellationToken);
+
+        return ApiResponse<List<Vectomera.Application.Features.ProductReviews.Dtos.ProductReviewDto>>.Ok(reviews, "Yorumlar başarıyla getirildi.");
     }
 }
 

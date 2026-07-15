@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using Vectomera.Application.Common.Events;
 using Vectomera.Application.Common.Interfaces;
 using Vectomera.Application.Common.Models;
@@ -32,7 +32,7 @@ public class WarehouseInventoryService : IWarehouseInventoryService
         var responseData = new Vectomera.Application.Features.WarehouseInventories.Dtos.BulkCreateWarehouseInventoryResponse();
 
         if (requests == null || !requests.Any())
-            return ApiResponse<Vectomera.Application.Features.WarehouseInventories.Dtos.BulkCreateWarehouseInventoryResponse>.Fail("Liste boÅŸ olamaz.");
+            return ApiResponse<Vectomera.Application.Features.WarehouseInventories.Dtos.BulkCreateWarehouseInventoryResponse>.Fail("Liste boş olamaz.");
 
         var productIds = requests.Select(r => r.ProductId).Distinct().ToList();
         var warehouseIds = requests.Select(r => r.WarehouseId).Distinct().ToList();
@@ -77,7 +77,7 @@ public class WarehouseInventoryService : IWarehouseInventoryService
                 {
                     ProductId = request.ProductId,
                     Sku = sku,
-                    ErrorMessage = "ÃœrÃ¼n bulunamadÄ±."
+                    ErrorMessage = "Ürün bulunamadı."
                 });
                 continue;
             }
@@ -88,7 +88,7 @@ public class WarehouseInventoryService : IWarehouseInventoryService
                 {
                     ProductId = request.ProductId,
                     Sku = sku,
-                    ErrorMessage = "Depo bulunamadÄ±."
+                    ErrorMessage = "Depo bulunamadı."
                 });
                 continue;
             }
@@ -99,7 +99,7 @@ public class WarehouseInventoryService : IWarehouseInventoryService
                  {
                      ProductId = request.ProductId,
                      Sku = sku,
-                     ErrorMessage = "Bu listede bu Ã¼rÃ¼n bu depo iÃ§in mÃ¼kerrer gÃ¶nderilmiÅŸ."
+                     ErrorMessage = "Bu listede bu ürün bu depo için mükerrer gönderilmiş."
                  });
                  continue;
             }
@@ -110,7 +110,7 @@ public class WarehouseInventoryService : IWarehouseInventoryService
                 {
                     ProductId = request.ProductId,
                     Sku = sku,
-                    ErrorMessage = "Bu Ã¼rÃ¼n bu depo iÃ§in zaten kayÄ±tlÄ±."
+                    ErrorMessage = "Bu ürün bu depo için zaten kayıtlı."
                 });
                 continue;
             }
@@ -147,7 +147,7 @@ public class WarehouseInventoryService : IWarehouseInventoryService
             await Task.WhenAll(publishTasks);
         }
 
-        return ApiResponse<Vectomera.Application.Features.WarehouseInventories.Dtos.BulkCreateWarehouseInventoryResponse>.Ok(responseData, "Ä°ÅŸlem tamamlandÄ±.");
+        return ApiResponse<Vectomera.Application.Features.WarehouseInventories.Dtos.BulkCreateWarehouseInventoryResponse>.Ok(responseData, "İşlem tamamlandı.");
     }
 
     public async Task<ApiResponse<List<Vectomera.Application.Features.WarehouseInventories.Dtos.WarehouseInventoryDto>>> GetWarehouseInventoriesAsync(

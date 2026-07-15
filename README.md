@@ -1,4 +1,4 @@
-﻿# â˜€ï¸ Vectomera â€” AI-Powered Inventory & Product Intelligence Platform
+# ☀️ Vectomera — AI-Powered Inventory & Product Intelligence Platform
 
 <p align="center">
   <img src="https://img.shields.io/badge/.NET-9.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" />
@@ -12,20 +12,20 @@
 
 ---
 
-## ğŸ—ï¸ Architecture Overview
+## 🏗️ Architecture Overview
 
 The project is built upon **Clean Architecture** principles and orchestrated using **.NET Aspire**.
 
 ```
 Vectomera.sln
-â”œâ”€â”€ Vectomera.AppHost          â†’ .NET Aspire Orchestrator (Api + Worker)
-â”œâ”€â”€ Vectomera.Api              â†’ REST API (Minimal API Endpoints)
-â”œâ”€â”€ Vectomera.Application      â†’ Business rules, Interfaces, DTOs, Validations
-â”œâ”€â”€ Vectomera.Domain           â†’ Entity models, BaseEntity
-â”œâ”€â”€ Vectomera.Infrastructure   â†’ EF Core, Services, Ollama/SK Integrations
-â”œâ”€â”€ Vectomera.Worker           â†’ Background consumers (MassTransit)
-â”œâ”€â”€ Vectomera.ServiceDefaults  â†’ Shared Aspire configurations
-â””â”€â”€ docker-compose.yml      â†’ PostgreSQL (pgvector) + RabbitMQ
+├── Vectomera.AppHost          → .NET Aspire Orchestrator (Api + Worker)
+├── Vectomera.Api              → REST API (Minimal API Endpoints)
+├── Vectomera.Application      → Business rules, Interfaces, DTOs, Validations
+├── Vectomera.Domain           → Entity models, BaseEntity
+├── Vectomera.Infrastructure   → EF Core, Services, Ollama/SK Integrations
+├── Vectomera.Worker           → Background consumers (MassTransit)
+├── Vectomera.ServiceDefaults  → Shared Aspire configurations
+└── docker-compose.yml         → PostgreSQL (pgvector) + RabbitMQ
 ```
 
 ### Layer Dependency Flow
@@ -43,13 +43,13 @@ graph TD
 
 ---
 
-## ğŸ¤– RAG (Retrieval-Augmented Generation) Pipeline
+## 🤖 RAG (Retrieval-Augmented Generation) Pipeline
 
 The core of Vectomera' AI capabilities lies within its **RAG** architecture. This flow semantically matches user queries with the most relevant database records, passing them to the LLM as context to generate highly accurate, context-aware, and hallucination-free responses.
 
 ```mermaid
 sequenceDiagram
-    participant User as ğŸ‘¤ User
+    participant User as 👤 User
     participant API as Vectomera.Api
     participant AI as AiService
     participant EMB as EmbeddingService
@@ -59,15 +59,15 @@ sequenceDiagram
     User->>API: POST /ai/advice { query }
     API->>AI: GetAdviceAsync(query)
     
-    Note over AI,EMB: 1ï¸âƒ£ Embedding
-    AI->>EMB: Query â†’ Vector (nomic-embed-text)
+    Note over AI,EMB: 1️⃣ Embedding
+    AI->>EMB: Query → Vector (nomic-embed-text)
     EMB-->>AI: float[] queryVector
 
-    Note over AI,PG: 2ï¸âƒ£ Retrieval (Vector Search)
-    AI->>PG: L2Distance search (Top-3 Ã— 3 tables)
+    Note over AI,PG: 2️⃣ Retrieval (Vector Search)
+    AI->>PG: L2Distance search (Top-3 × 3 tables)
     PG-->>AI: Most relevant chunk texts
 
-    Note over AI,LLM: 3ï¸âƒ£ Generation
+    Note over AI,LLM: 3️⃣ Generation
     AI->>LLM: System Prompt + Context + Query
     LLM-->>AI: Synthesized Response
     
@@ -87,7 +87,7 @@ The query vector is searched across the following **3 distinct VectorChunk** tab
 
 ---
 
-## âš™ï¸ Embedding & Chunking Flow
+## ⚙️ Embedding & Chunking Flow
 
 Whenever new data is created (product, inventory, or review), **embedding** and **chunking** processes are automatically triggered in the background.
 
@@ -150,7 +150,7 @@ flowchart LR
 
 ---
 
-## ğŸ—„ï¸ Domain Model
+## 🗄️ Domain Model
 
 ```mermaid
 erDiagram
@@ -218,7 +218,7 @@ erDiagram
 
 ---
 
-## ğŸ›£ï¸ API Endpoints
+## 🛣️ API Endpoints
 
 ### Product Management (`/products`)
 | Method | Endpoint | Description |
@@ -243,11 +243,11 @@ erDiagram
 |---|---|---|
 | `POST` | `/ai/advice` | RAG-based semantic Q&A. Scans all VectorChunk tables |
 
-> ğŸ“Œ All endpoints are accessible and testable via the **Swagger UI**.
+> 📌 All endpoints are accessible and testable via the **Swagger UI**.
 
 ---
 
-## ğŸ§° Tech Stack
+## 🧰 Tech Stack
 
 | Technology | Purpose |
 |---|---|
@@ -266,7 +266,7 @@ erDiagram
 
 ---
 
-## ğŸš€ Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -320,7 +320,7 @@ http://localhost:<port>/swagger
 
 ---
 
-## ğŸ“ Configuration
+## ⚙️ Configuration
 
 You can customize the following settings in the `appsettings.json` file:
 
@@ -336,7 +336,7 @@ You can customize the following settings in the `appsettings.json` file:
 
 ---
 
-## ğŸ“„ License
+## 📄 License
 
 This project is for private use.
 

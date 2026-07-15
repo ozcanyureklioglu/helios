@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vectomera Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2><span>Vectomera</span> AI</h2>
+            </div>
+            <nav class="menu">
+                <a href="#" class="menu-item active" data-view="ai-agent">
+                    <span class="icon">🤖</span>
+                    AI Ajan
+                </a>
+                <a href="#" class="menu-item" data-view="products">
+                    <span class="icon">📦</span>
+                    Ürünler
+                </a>
+                <a href="#" class="menu-item" data-view="reviews">
+                    <span class="icon">⭐</span>
+                    Ürün Yorumları
+                </a>
+                <a href="#" class="menu-item" data-view="warehouse">
+                    <span class="icon">🏢</span>
+                    Depo - Ürün
+                </a>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <!-- View containers -->
+            <div id="ai-agent-view" class="view active"></div>
+            <div id="products-view" class="view"></div>
+            <div id="reviews-view" class="view"></div>
+            <div id="warehouse-view" class="view"></div>
+        </main>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

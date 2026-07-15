@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using Vectomera.Application.Common.Interfaces;
 using Vectomera.Application.Common.Models;
 using Vectomera.Application.Common.Utils;
@@ -12,7 +12,7 @@ namespace Vectomera.Infrastructure.Services;
 
 /// <summary>
 /// IProductService implementasyonu.
-/// VeritabanÄ± iÅŸlemleri, validation ve mesaj kuyruÄŸu bu sÄ±nÄ±fta koordine edilir.
+/// Veritabanı işlemleri, validation ve mesaj kuyruğu bu sınıfta koordine edilir.
 /// </summary>
 public class ProductService : IProductService
 {
@@ -77,17 +77,17 @@ public class ProductService : IProductService
             return ApiResponse<Guid>.Fail(errors);
         }
 
-        // Marka kontrolÃ¼
+        // Marka kontrolü
         var brandExists = await _context.Brands.AnyAsync(b => b.Id == request.BrandId, cancellationToken);
         if (!brandExists)
-            return ApiResponse<Guid>.Fail("Marka bulunamadÄ±.");
+            return ApiResponse<Guid>.Fail("Marka bulunamadı.");
 
-        // Kategori kontrolÃ¼
+        // Kategori kontrolü
         var categoryExists = await _context.Categories.AnyAsync(c => c.Id == request.CategoryId, cancellationToken);
         if (!categoryExists)
-            return ApiResponse<Guid>.Fail("Kategori bulunamadÄ±.");
+            return ApiResponse<Guid>.Fail("Kategori bulunamadı.");
 
-        // Slug Ã¼ret ve benzersizliÄŸi garantile
+        // Slug üret ve benzersizliği garantile
         var slug = SlugHelper.GenerateSlug(request.Name);
         var slugExists = await _context.Products.AnyAsync(p => p.Slug == slug, cancellationToken);
         if (slugExists)
@@ -104,7 +104,7 @@ public class ProductService : IProductService
             SearchText = request.SearchText
         };
 
-        // Ã–zellik deÄŸerleri ekle
+        // Özellik değerleri ekle
         if (request.PropertyValueIds != null && request.PropertyValueIds.Count > 0)
         {
             foreach (var propertyValueId in request.PropertyValueIds.Distinct())
@@ -125,7 +125,7 @@ public class ProductService : IProductService
         _context.Products.Add(product);
         await _context.SaveChangesAsync(cancellationToken);
 
-        // Embedding kuyruÄŸuna mesaj gÃ¶nder
+        // Embedding kuyruğuna mesaj gönder
         await _publishEndpoint.Publish(
             new Vectomera.Application.Common.Events.ProductEmbeddingEvent
             {
@@ -133,7 +133,7 @@ public class ProductService : IProductService
                 Description = product.Description
             }, cancellationToken);
 
-        return ApiResponse<Guid>.Ok(product.Id, "ÃœrÃ¼n baÅŸarÄ±yla oluÅŸturuldu.");
+        return ApiResponse<Guid>.Ok(product.Id, "Ürün başarıyla oluşturuldu.");
     }
 
     public async Task<ApiResponse<Guid>> UpdateProductAsync(
@@ -153,9 +153,9 @@ public class ProductService : IProductService
             .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
 
         if (product == null)
-            return ApiResponse<Guid>.Fail("ÃœrÃ¼n bulunamadÄ±.");
+            return ApiResponse<Guid>.Fail("Ürün bulunamadı.");
 
-        // Ä°sim deÄŸiÅŸtiyse yeni slug Ã¼ret
+        // İsim değiştiyse yeni slug üret
         if (product.Name != request.Name)
         {
             var slug = SlugHelper.GenerateSlug(request.Name);
@@ -174,7 +174,7 @@ public class ProductService : IProductService
         _context.Products.Update(product);
         await _context.SaveChangesAsync(cancellationToken);
 
-        // Embedding kuyruÄŸuna mesaj gÃ¶nder
+        // Embedding kuyruğuna mesaj gönder
         await _publishEndpoint.Publish(
             new Vectomera.Application.Common.Events.ProductEmbeddingEvent
             {
@@ -182,7 +182,7 @@ public class ProductService : IProductService
                 Description = product.Description
             }, cancellationToken);
 
-        return ApiResponse<Guid>.Ok(product.Id, "ÃœrÃ¼n baÅŸarÄ±yla gÃ¼ncellendi.");
+        return ApiResponse<Guid>.Ok(product.Id, "Ürün başarıyla güncellendi.");
     }
 }
 

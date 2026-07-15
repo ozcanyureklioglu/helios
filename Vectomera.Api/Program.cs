@@ -1,4 +1,4 @@
-﻿using Vectomera.Api;
+using Vectomera.Api;
 using Vectomera.Api.Extensions;
 using Vectomera.Application.Extensions;
 using Vectomera.Infrastructure.Extensions;
@@ -17,6 +17,17 @@ builder.Services.AddSwaggerGen();
 // Register custom endpoints from the current assembly
 builder.Services.AddEndpoints(typeof(Program).Assembly);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
+
 // Add application layer and infrastructure layer services here
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -33,6 +44,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 
 // Map all registered endpoints
